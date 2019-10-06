@@ -251,7 +251,7 @@ class EtlJob(SparkJob):
 
         if not self.train_file:
             df = df.filter(df['test'] == 1)
-            df = df.select(['key_id',
+            df = df.select(['UserID', 'key_id',
                             'number_ads_user', 'hms_index',
                             'number_user_second', 'number_ads_second',
                             'number_ads_user_second',
@@ -277,4 +277,4 @@ class EtlJob(SparkJob):
 
 
 if __name__ == '__main__':
-    EtlJob(train_file=True, ar_lags=10, ar_min_lag=1, ma_ss_lag=[60], variable_analysis=True).run()
+    EtlJob(train_file=True, ar_lags=5, ar_min_lag=1, ma_ss_lag=[60], variable_analysis=True).run()

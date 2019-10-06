@@ -26,7 +26,7 @@ df = pd.DataFrame(scaler.transform(df), columns=df.columns)
 
 min_sample_leaf = round(y.shape[0] * 0.005)
 min_sample_split = min_sample_leaf * 10
-model = GradientBoostingRegressor(learning_rate=0.001, n_estimators=500, min_samples_leaf=min_sample_leaf,
+model = GradientBoostingRegressor(learning_rate=0.01, n_estimators=500, min_samples_leaf=min_sample_leaf,
                                   min_samples_split=min_sample_split, random_state=42, max_depth=None)
 
 skf = TimeSeriesSplit(n_splits=5)
@@ -36,6 +36,7 @@ y_true = np.empty(shape=[0, ])
 predicted_index = np.empty(shape=[0, ])
 
 for train_index, test_index in skf.split(df, y):
+    print('iter')
     X_train, X_test = df.loc[train_index].values, df.loc[test_index].values
     y_train, y_test = y[train_index], y[test_index]
 
@@ -46,6 +47,8 @@ for train_index, test_index in skf.split(df, y):
     predicted_index = np.append(predicted_index, test_index)
     del X_train, X_test, y_train, y_test
 
+print(y_true)
+print(y_pred_score)
 rmse = np.sqrt(mean_squared_error(y_true, y_pred_score))
 print('RMSE % .2f' % rmse)
 

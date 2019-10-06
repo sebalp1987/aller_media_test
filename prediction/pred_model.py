@@ -1,8 +1,7 @@
 from sklearn.externals import joblib
 import os
-from resources import STRING
 import pandas as pd
-
+from resources import STRING
 
 class PredictionModel:
     def __init__(self, df):
@@ -15,17 +14,20 @@ class PredictionModel:
 
     def preprocessing_test(self):
         print(self.df.columns.values.tolist())
-        # Scale
-        df = pd.DataFrame(self._scale_param.transform(self.df), columns=self.df.columns)
+        df = pd.DataFrame(self._scale_param.transform(self), columns=self.columns)
         return df
 
-    @staticmethod
-    def prediction(df):
-        pred = model.predict(df)
+    def prediction(self):
+        pred = self._model.predict(self)
         pred = pd.DataFrame(pred, columns=['y_pred'])
         return pred
 
     @staticmethod
-    def post_process(pred):
-        return pred
+    def post_process(pred, key_df, name=''):
+        key_df = pd.concat([key_df, pred], axis=1)
+        if not name:
+            key_df.to_csv(STRING.submission, sep=';', index=False)
+        else:
+            key_df.to_csv(STRING.model_output_path + 'model_' + name + '.csv', sep=';', index=False)
+        return 0
 

@@ -14,7 +14,7 @@ lgb = {
 gb = {
     'max_depth': None,
     'learning_rate': 0.01,
-    'n_estimators': 300,
+    'n_estimators': 500,
     'random_state': 42,
 }
 

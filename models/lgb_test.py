@@ -24,12 +24,18 @@ scaler = MinMaxScaler(feature_range=(-1, 1))
 scaler.fit(df)
 df = pd.DataFrame(scaler.transform(df), columns=df.columns)
 
-model = LGBMRegressor(boosting_type='goss',
-                      max_leaves=300,
+min_sample_leaf = round(y.shape[0] * 0.005)
+min_sample_split = min_sample_leaf * 10
+
+model = LGBMRegressor(boosting_type='dart',
+                      num_leaves=300,
                       max_depth=-1,
                       learning_rate=0.01,
-                      n_estimators=300,
-                      random_state=42
+                      n_estimators=500,
+                      random_state=42,
+                      objective='regression',
+                      reg_lambda=0.01,
+                      min_child_samples=min_sample_leaf
                       )
 
 skf = TimeSeriesSplit(n_splits=5)
@@ -39,15 +45,15 @@ y_true = np.empty(shape=[0, ])
 predicted_index = np.empty(shape=[0, ])
 
 for train_index, test_index in skf.split(df, y):
+    print('iter')
     X_train, X_test = df.loc[train_index].values, df.loc[test_index].values
     y_train, y_test = y[train_index], y[test_index]
 
     model.fit(X_train, y_train)
     prediction_i = model.predict(X_test)
+    print(prediction_i)
     y_pred_score = np.append(y_pred_score, prediction_i, axis=0)
-    print(y_pred_score)
     y_true = np.append(y_true, y_test, axis=0)
-    print(y_true)
     predicted_index = np.append(predicted_index, test_index)
     del X_train, X_test, y_train, y_test
 
