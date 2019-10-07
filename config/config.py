@@ -1,14 +1,12 @@
 lgb = {
-    'boosting_type': 'goss',
-    'max_leaves': 300,
+    'boosting_type': 'dart',
+    'num_leaves': 300,
     'max_depth': -1,
     'learning_rate': 0.01,
-    'n_estimators': 300,
-    'objective': 'multiclass',
-    'class_weight': 'balanced',
+    'n_estimators': 500,
     'random_state': 42,
-    'early_stopping_rounds': 2,
-    'zero_as_missing': True
+    'objective': 'regression',
+    'reg_lambda': 0.01,
 }
 
 gb = {

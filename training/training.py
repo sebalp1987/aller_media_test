@@ -28,7 +28,7 @@ model = GradientBoostingRegressor(min_samples_leaf=min_sample_leaf,
 model.set_params(**parameters)
 print(model)
 model.fit(df, y)
-dict_model = {'model': model, 'param_scale': scaler}
+dict_model = {'model': model, 'param_scale': scaler, 'columns': columns}
 
 joblib.dump(dict_model,
             os.path.join(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))),
