@@ -20,7 +20,7 @@ scaler = MinMaxScaler(feature_range=(0, 1))
 scaler.fit(df)
 df = pd.DataFrame(scaler.transform(df), columns=df.columns)
 
-min_sample_leaf = round(y.shape[0] * 0.005)
+min_sample_leaf = round(y.shape[0] * 0.0001)
 min_sample_split = min_sample_leaf * 10
 model = GradientBoostingRegressor(min_samples_leaf=min_sample_leaf,
                                   min_samples_split=min_sample_split)
