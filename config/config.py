@@ -1,6 +1,6 @@
 lgb = {
-    'boosting_type': 'dart',
-    'num_leaves': 300,
+    'boosting_type': 'gbdt',
+    'num_leaves': 500,
     'max_depth': -1,
     'learning_rate': 0.01,
     'n_estimators': 500,

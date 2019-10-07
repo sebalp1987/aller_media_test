@@ -24,10 +24,10 @@ scaler = MinMaxScaler(feature_range=(-1, 1))
 scaler.fit(df)
 df = pd.DataFrame(scaler.transform(df), columns=df.columns)
 
-min_sample_leaf = round(y.shape[0] * 0.005)
+min_sample_leaf = round(y.shape[0] * 0.0001)
 min_sample_split = min_sample_leaf * 10
 
-model = LGBMRegressor(boosting_type='dart',
+model = LGBMRegressor(boosting_type='gbdt',
                       num_leaves=300,
                       max_depth=-1,
                       learning_rate=0.01,

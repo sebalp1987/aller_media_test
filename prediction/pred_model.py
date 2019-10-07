@@ -9,7 +9,7 @@ class PredictionModel:
     def __init__(self, df, nn=None):
         self._dict_models = joblib.load(
             os.path.join(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))),
-                         "aller_media", "models", "model_rf.pkl"))
+                         "aller_media", "models", "model_lgbm.pkl"))
         self._model = self._dict_models.get("model")
         self._scale_param = self._dict_models.get("param_scale")
         self._columns = self._dict_models.get("columns")
